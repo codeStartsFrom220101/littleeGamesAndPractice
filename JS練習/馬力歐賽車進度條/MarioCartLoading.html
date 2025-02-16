@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>瑪利歐賽車進度條</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      overflow: hidden;
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background-image: url(https://www.nintendo.com/tw/switch/mario_kart_8_deluxe/assets/images/common/bg_page-black.png);
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 20px;
+      background-image: url(https://www.nintendo.com/tw/switch/mario_kart_8_deluxe/assets/images/loading/line_rainbow.gif);
+    }
+
+    .practice {
+      position: absolute;
+      font-size: 1.5rem;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+    }
+
+    .loadingTitle {
+      width: 385px;
+      height: 120px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .carBox {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      /* border: 1px solid #000; */
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .set1,
+    .set2,
+    .set3 {
+      transition: all 12s linear;
+    }
+
+    .front {
+      left: 0;
+    }
+
+    .left {
+      left: -100%;
+    }
+
+    .right {
+      left: 100%;
+      transition: all 0s linear;
+    }
+
+    .loadingBar__container {
+      width: 200px;
+      position: relative;
+      left: 50%;
+      top: 70%;
+      transform: translate(-50%, -50%);
+    }
+
+    .loadingBar__title {
+      color: #fff;
+      text-align: center;
+      font-size: 0.8rem;
+      margin-bottom: 3px;
+    }
+
+    .loadingBar {
+      position: relative;
+      width: 100%;
+      height: 20px;
+      border-radius: 10px;
+      border: 2px solid #fff;
+      background: transparent;
+    }
+
+    .loading {
+      position: absolute;
+      width: 0;
+      height: 10px;
+      border-radius: 7px;
+      top: 50%;
+      left: 3px;
+      transform: translateY(-50%);
+      background: #fff;
+    }
+
+    .loading.active {
+      width: calc(100% - 6px);
+      transition: all 3s linear;
+    }
+
+    .carBox>div {
+      width: 120px;
+      height: 120px;
+      background-image: url(https://www.nintendo.com/tw/switch/mario_kart_8_deluxe/assets/images/common/img_sfc-chara.png);
+      background-repeat: no-repeat;
+    }
+
+    .carBox>div:nth-of-type(2n) {
+      animation: upAndDown .5s infinite linear;
+    }
+
+    .carBox>div:nth-of-type(2n - 1) {
+      animation: upAndDown .5s .25s infinite linear;
+    }
+
+    @keyframes upAndDown {
+      0% {
+        transform: translateY(0);
+      }
+
+      25% {
+        transform: translateY(3px);
+      }
+
+      50% {
+        transform: translateY(0);
+      }
+
+      75% {
+        transform: translateY(-3px);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- https://www.nintendo.com/tw/switch/mario_kart_8_deluxe/?srsltid=AfmBOoqte5Pj9Fk_Q8T1FJ_3XBbTUlV0kM3mJbFapQvSUHiIk1xT-tzH -->
+  <div class="practice">此網站僅供練習使用</div>
+  <img class="loadingTitle"
+    src="https://www.nintendo.com/tw/switch/mario_kart_8_deluxe/assets/images/loading/logo_mariokart8.png" alt="">
+
+  <div class="loadingBar__container">
+    <h3 class="loadingBar__title">Loading ...</h3>
+    <div class="loadingBar">
+      <div class="loading"></div>
+    </div>
+  </div>
+
+  <div class="carBox set1 front">
+    <div class="car1"></div>
+    <div class="car2"></div>
+    <div class="car3"></div>
+    <div class="car4"></div>
+    <div class="car5"></div>
+    <div class="car6"></div>
+    <div class="car7"></div>
+    <div class="car8"></div>
+  </div>
+  <div class="carBox set2 front right">
+    <div class="car1"></div>
+    <div class="car2"></div>
+    <div class="car3"></div>
+    <div class="car4"></div>
+    <div class="car5"></div>
+    <div class="car6"></div>
+    <div class="car7"></div>
+    <div class="car8"></div>
+  </div>
+  <div class="carBox set3 front left">
+    <div class="car1"></div>
+    <div class="car2"></div>
+    <div class="car3"></div>
+    <div class="car4"></div>
+    <div class="car5"></div>
+    <div class="car6"></div>
+    <div class="car7"></div>
+    <div class="car8"></div>
+  </div>
+</body>
+
+</html>
+
+<script>
+  const loading = document.querySelector('.loading');
+  window.addEventListener('click', () => {
+    loading.classList.toggle('active')
+  })
+
+  const car$ = Array.from(document.querySelectorAll('.carBox > div'))
+  for (const car in car$) {
+    let x = car % 5
+    let y = Math.floor(car / 5)
+    let w = 120
+    let h = 120
+    car$[car].style.backgroundPositionX = `-${x * w}px`
+    car$[car].style.backgroundPositionY = `-${y * h}px`
+    console.log(car$[car]);
+  }
+
+  // 取得 carBox 元素
+  const set1 = document.querySelector('.set1');
+  const set2 = document.querySelector('.set2');
+  const set3 = document.querySelector('.set3');
+
+  setTimeout(() => {
+    set1.classList.add('left');
+    set2.classList.remove('right');
+    set3.classList.add('right');
+    set3.classList.remove('left');
+  })
+
+  setTimeout(() => {
+    set1.classList.remove('left');
+    set1.classList.add('right');
+    set2.classList.add('left');
+    set3.classList.remove('right')
+  }, 12000)
+
+  setTimeout(() => {
+    set1.classList.remove('right');
+    set2.classList.add('right')
+    set2.classList.remove('left');
+    set3.classList.add('left');
+  }, 24000)
+
+  setInterval(() => {
+    setTimeout(() => {
+      set1.classList.add('left');
+      set2.classList.remove('right');
+      set3.classList.add('right');
+      set3.classList.remove('left');
+    })
+
+    setTimeout(() => {
+      set1.classList.remove('left');
+      set1.classList.add('right');
+      set2.classList.add('left');
+      set3.classList.remove('right')
+    }, 12000)
+
+    setTimeout(() => {
+      set1.classList.remove('right');
+      set2.classList.add('right')
+      set2.classList.remove('left');
+      set3.classList.add('left');
+    }, 24000)
+  }, 36000);
+
+
+</script>

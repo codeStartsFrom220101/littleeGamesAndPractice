@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>物件迴圈取值</title>
+</head>
+
+<body>
+
+  <script>
+    // const obj = [{
+    //   name: "沈長昱",
+    //   id: "19",
+    //   gender: "male"
+    // }, {
+    //   name: "洪孜睿",
+    //   id: "20",
+    //   gender: "male"
+    // }, {
+    //   name: "吳奇峰",
+    //   id: "21",
+    //   gender: "male"
+    // },
+    // ]
+
+
+
+    // for (const student of obj) {
+    //   for (const info in student) {
+    //     console.log(student[info]);
+    //   }
+
+    // }
+
+    // let obj2 = structuredClone(obj);
+    // obj2[0].name = "小呆瓜";
+    // console.log(obj, obj2);
+
+    // let obj3 = JSON.parse(JSON.stringify(obj));
+    // obj3[0].name = "小呆瓜";
+    // console.log(obj, obj3);
+
+    // const original = new Map([
+    //   ["key1", "value1"],
+    //   ["key2", { nested: "value2" }]
+    // ]);
+
+    // const cloned = structuredClone(original);
+    // cloned.get("key2").nested = "new value";
+
+    // console.log(original.get("key2").nested); // "value2"
+    // console.log(cloned.get("key2").nested);  // "new value"
+
+
+    // const sym1 = Symbol("description1");
+    // const sym2 = Symbol("description1");
+
+    // console.log(sym1 === sym2); // false，每個 Symbol 都是唯一的
+
+    // console.log(sym1, sym2); // Symbol(description1)
+
+    const niHao = {
+      data: [1, 2, 3],
+      [Symbol.asyncIterator]() {
+        let index = 0
+        return {
+          next: () => new Promise((resolve, reject) => {
+            setTimeout(() => {
+              if (index < this.data.length) {
+                resolve({ value: this.data[index++], done: false });
+              } else {
+                resolve({ value: undefined, done: true });
+              }
+            }, 1000);
+            // reject(console.log('reject 失敗'))
+          })
+        }
+      }
+    };
+
+
+    console.log(typeof niHao, niHao);
+
+
+
+    // (async () => {
+    //   for await (const value of niHao) {
+    //     console.log(value); // 1, 2, 3
+    //   }
+    // })();
+
+    let loremStrArr = []
+
+
+
+    // 生成隨機長度無意義字串
+    function getRandomStr(frequency) {
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"; // 字元集
+      for (let i = 0; i < frequency; i++) {
+        const randomLength = Math.floor(Math.random() * 4) + 3
+        let result = ''
+        for (let i = 0; i < randomLength; i++) {
+          const randomIndex = Math.floor(Math.random() * chars.length)
+          result += chars[randomIndex]
+        }
+        loremStrArr.push(result)
+      }
+    }
+
+    getRandomStr(10000);
+
+    console.log(loremStrArr);
+
+    const tryAsyncIterator = {
+      data: loremStrArr,
+      async *[Symbol.asyncIterator]() {
+        let index = 0;
+        const chunkSize = 1000;
+        while (index < this.data.length) {
+          yield this.data.slice(index, index + chunkSize)
+          index += chunkSize
+          await new Promise(resolve => setTimeout(resolve, 500))
+        }
+      }
+    };
+
+    console.log(tryAsyncIterator);
+
+
+    (async () => {
+      for await (const value of tryAsyncIterator) {
+        console.log(value);
+      }
+    })();
+
+
+
+
+  </script>
+</body>
+
+</html>

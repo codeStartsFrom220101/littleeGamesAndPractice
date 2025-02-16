@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>計算BMI</title>
+  <link rel="stylesheet" href="../reset.css">
+  <link rel="stylesheet" href="BMI.min.css">
+</head>
+
+<body>
+  <form class="box" action="">
+    <h1 class="title">BMI 計算器</h1>
+    <div class="inputBlock">
+      <label for="gender">性別：</label>
+      <select id="gender" class="gender">
+        <option value="male">男性</option>
+        <option value="female">女性</option>
+      </select>
+    </div>
+    <div class="inputBlock">
+      <label for="heightid">
+        身高：
+      </label>
+      <input type="number" min="0" class="height" id="heightid" placeholder="單位公分">
+    </div>
+    <div class="inputBlock">
+      <label for="weightid">
+        體重：
+      </label>
+      <input type="number" min="0" class="weight" id="weightid" placeholder="單位公斤">
+    </div>
+    <div class="btnBlock">
+      <button type="button" class="clear">清除</button>
+      <button type="button" class="calculation">計算</button>
+    </div>
+    <div class="result">等待您的結果</div>
+  </form>
+</body>
+
+</html>
+<script src="BMI.js"></script>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-tw">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>0A0B</title>
+  <link rel="stylesheet" href="../color.css">
+  <style>
+    /* 適用於大多數現代瀏覽器 */
+    input[type="number"] {
+      -moz-appearance: textfield;
+      /* 移除 Firefox 的箭頭 */
+      -webkit-appearance: none;
+      /* 移除 Chrome、Safari 的箭頭 */
+      appearance: none;
+      /* 通用方法 */
+    }
+
+    /* 防止箭頭在某些情況下仍顯示 */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .container {
+      margin: 2rem auto;
+      width: 300px;
+      border-radius: 15px;
+      background: var(--dark);
+      display: flex;
+      flex-wrap: wrap;
+      text-align: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    h1 {
+      color: var(--light);
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      width: 100%;
+    }
+
+    .regulation {
+      display: flex;
+      justify-content: space-around;
+      color: var(--light);
+      width: 100%;
+      margin-bottom: .5rem;
+    }
+
+    .guess {
+      border-radius: 10px;
+      width: 100%;
+      font-size: 1.3rem;
+      background: var(--light);
+      padding: 0.5rem;
+      margin-bottom: 1.5rem;
+      text-align: right;
+    }
+
+    .btns {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .btns>button {
+      outline: none;
+      border: none;
+      border-radius: .4rem;
+      cursor: pointer;
+      padding: 0.3rem 0;
+      font-size: 1.3rem;
+      background: var(--light);
+      transition: all .3s linear;
+      width: 45%;
+    }
+
+    .btns>button:hover {
+      color: var(--light);
+      background: var(--slateBlue);
+    }
+
+    .history {
+      margin: 2rem auto;
+      width: 300px;
+      border-radius: 15px;
+      background: var(--dark);
+      display: flex;
+      flex-wrap: wrap;
+      text-align: center;
+      justify-content: center;
+      padding: 1rem;
+      color: var(--light);
+    }
+
+    .history>h3 {
+      width: 50%;
+      font-size: 1.3rem;
+    }
+
+    .history>span {
+      width: 50%;
+      font-size: 1.1rem;
+    }
+
+    .history>span:nth-of-type(1),
+    .history>span:nth-of-type(2) {
+      margin-top: 1rem;
+    }
+
+    .result {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3rem;
+      opacity: 0;
+      font-weight: 900;
+    }
+
+    .result.active {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>猜數字</h1>
+    <div class="regulation">
+      <span>剩餘時間：<span class="time">03:00</span></span>
+      <span>剩餘次數：<span class="count">8</span></span>
+    </div>
+    <input type="number" class="guess" placeholder="輸入四個不重複數字" length="4">
+    <div class="btns">
+      <button type="button" class="resetBtn" disabled>再玩一次</button>
+      <button type="button" class="guessBtn">輸入數字</button>
+    </div>
+  </div>
+  <div class="history">
+    <h3>猜測</h3>
+    <h3>結果</h3>
+  </div>
+  <div class="result active">0A0B</div>
+</body>
+
+<script>
+  let arr = []
+  const time = document.querySelector('.time');
+  const count = document.querySelector('.count');
+  const guess = document.querySelector('.guess');
+  const guessBtn = document.querySelector('.guessBtn');
+  const resetBtn = document.querySelector('.resetBtn');
+  const history = document.querySelector('.history');
+  const result = document.querySelector('.result');
+  const regulationTime = document.querySelector('.time');
+  const regulationCount = document.querySelector('.count');
+
+  let intervalId;
+  let countDownClockOn = false;
+  let times = 180;
+  let min, sec;
+  let guessCount = 8;
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && !guessBtn.disabled) {
+      guessNum();
+    }
+  });
+
+  guessBtn.addEventListener('click', guessNum);
+
+  function guessNum() {
+    let num = guess.value;
+    if (!/^(?!.*(.).*\1)\d{4}$/.test(num)) return;
+
+    countDownClock();
+    const userArr = Array.from(num).map(Number);
+    let curretLocation = 0;
+    let curretNum = 0;
+    for (const key in userArr) {
+      if (userArr[key] == arr[key]) {
+        curretLocation++;
+      } else if (arr.includes(userArr[key])) {
+        curretNum++;
+      }
+    }
+    const resultStr = `${curretLocation}A${curretNum}B`;
+    result.textContent = resultStr;
+
+    const span1 = document.createElement('span');
+    const span2 = document.createElement('span');
+
+    span1.textContent = num;
+    span2.textContent = resultStr;
+    history.appendChild(span1);
+    history.appendChild(span2);
+    guess.value = '';
+    guess.focus();
+
+    countDown();
+    if (curretLocation === 4) {
+      result.textContent = '正確解答';
+      gameEnd();
+    }
+  }
+
+  function countDown() {
+    guessCount--;
+    regulationCount.textContent = guessCount;
+    if (guessCount <= 0) {
+      result.textContent = '沒猜到是傻子';
+      gameEnd();
+    }
+  }
+
+  function countDownClock() {
+    if (countDownClockOn) return;
+    countDownClockOn = true;
+
+
+    intervalId = setInterval(() => {
+      times--;
+      min = Math.floor(times / 60);
+      sec = times % 60;
+      regulationTime.textContent = `${min < 10 ? "0" + min : min}:${sec < 10 ? "0" + sec : sec}`;
+
+      if (sec === 0 && min === 0) {
+        result.textContent = '時間跑得比你的腦還快呢';
+        gameEnd();
+        countDownClockOn = false;
+        return;
+      }
+    }, 10);
+  }
+
+  function randomNum() {
+    for (let i = 0; arr.length < 4; i++) {
+      const num = Math.floor(Math.random() * 10);
+      if (!arr.includes(num)) {
+        arr.push(num);
+      }
+    }
+  }
+
+  resetBtn.addEventListener('click', resetGame);
+
+  function gameEnd() {
+    clearInterval(intervalId);
+    guessBtn.disabled = true;
+    resetBtn.disabled = false;
+    countDownClockOn = false;
+  }
+
+  function resetGame() {
+    arr = [];
+    times = 180;
+    guessCount = 8;
+    history.innerHTML = '<h3>猜測</h3><h3>結果</h3>';
+    result.textContent = '0A0B';
+    regulationTime.textContent = '03:00';
+    regulationCount.textContent = '8';
+    guess.value = '';
+    guessBtn.disabled = false;
+    resetBtn.disabled = true;
+    countDownClockOn = false;
+    clearInterval(intervalId);
+    randomNum();
+  }
+
+  randomNum();
+</script>
+
+</html>

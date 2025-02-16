@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>來玩終極密碼</title>
+  <link rel="stylesheet" href="../reset.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "微軟正黑體", Arial, sans-serif;
+    }
+
+    body {
+      background: #fcb69f;
+      color: #333;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .box {
+      max-width: 500px;
+      margin: 2rem auto;
+      background: #fff9f2;
+      padding: 3rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .box h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #ff6f61;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .box .guess {
+      width: 100%;
+      font-size: 2rem;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 2px solid #ff6f61;
+      border-radius: 0.5rem;
+      background: #fff;
+      color: #333;
+      outline: none;
+    }
+
+    .box .guess:focus {
+      border-color: #ff3b3f;
+      box-shadow: 0 0 8px rgba(255, 107, 107, 0.8);
+    }
+
+    .btnContainer {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .box .btnContainer button {
+      width: 48%;
+      font-size: 1.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .box .btnContainer .resetBtn {
+      background: #ff6f61;
+    }
+
+    .box .btnContainer .resetBtn:hover {
+      background: #ff3b3f;
+    }
+
+    .box .btnContainer .resetBtn:disabled {
+      color: rgb(67, 66, 66);
+      cursor: default;
+      background: #ff6f61;
+    }
+
+    .box .btnContainer .guessBtn {
+      background: #61b15a;
+    }
+
+    .box .btnContainer .guessBtn:hover {
+      background: #4b9d46;
+    }
+
+    .box .btnContainer .guessBtn:disabled {
+      color: rgb(67, 66, 66);
+      cursor: default;
+      background: #61b15a;
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      font-size: 1.5rem;
+      color: #444;
+      text-align: center;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .result h2 {
+      margin-bottom: 1rem;
+    }
+
+    .result p {
+      font-size: 1.3rem;
+      opacity: 0;
+    }
+
+    .result p.active {
+      opacity: 1;
+      transition: opacity .5s;
+    }
+  </style>
+</head>
+
+
+<body>
+  <div class="box">
+    <h1>終極密碼</h1>
+    <input type="number" max="100" class="guess">
+    <div class="btnContainer">
+      <button type="button" class="resetBtn" disabled>重設</button>
+      <button type="button" class="guessBtn">猜密碼</button>
+    </div>
+    <div class="result">
+      <h2 class="interval">請輸入1~100之間的數字</h2>
+      <p class="active">答案就是99</p>
+    </div>
+  </div>
+</body>
+
+
+</html>
+<script>
+  let min = 0;
+  let max = 100;
+  let secretCode = '';
+  let resultText = document.querySelector('.result p');
+  let guess = document.querySelector('.guess');
+  let resetBtn = document.querySelector('.resetBtn');
+  let guessBtn = document.querySelector('.guessBtn');
+  let interval = document.querySelector('.interval');
+
+  function getSecretCode() {
+    let num = Math.floor(Math.random() * (max - 1)) + min;
+    return num
+  }
+
+  window.addEventListener('keypress', (e) => {
+    if (e.keyCode === 13 && !guessBtn.disabled) {
+      guessSecretCode();
+    } else if (e.keyCode === 114 && !resetBtn.disabled) {
+      render();
+    }
+  })
+
+  function guessSecretCode() {
+    let userGuess = guess.value
+    if (!userGuess) {
+      alert('請fucking輸入該輸入的數字');
+      resetInput();
+      return;
+    } else if (userGuess >= max || userGuess <= min) {
+      alert('有區間你沒看到嗎呆子');
+      resetInput();
+      return;
+    } else if (userGuess > secretCode) {
+      max = userGuess * 1;
+      updateInterval();
+    } else if (userGuess < secretCode) {
+      min = userGuess * 1;
+      updateInterval();
+    } else {
+      alert('Bomb!Bomb!爆炸囉!!!喝酒');
+      endGame();
+    }
+  }
+
+  guessBtn.addEventListener('click', guessSecretCode)
+
+  resetBtn.addEventListener('click', () => {
+    render();
+  })
+
+  function render() {
+    resetBtn.disabled = true;
+    guessBtn.disabled = false;
+    guess.value = ''
+    max = 100
+    min = 0
+    resultText.classList.remove('active');
+    secretCode = getSecretCode();
+    interval.textContent = `請輸入${min}~${max}之間的數字`
+    resultText.textContent = `答案就是${secretCode}`;
+    console.log(secretCode);
+
+  }
+
+  function updateInterval() {
+    interval.textContent = `請輸入 ${min} ~ ${max} 之間的數字`;
+    resetInput();
+  }
+
+  function resetInput() {
+    guess.value = '';
+    guess.focus();
+  }
+
+  function endGame() {
+    guessBtn.disabled = true;
+    resetBtn.disabled = false;
+    resultText.classList.add('active');
+  }
+
+  render();
+
+</script>

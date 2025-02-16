@@ -1,0 +1,111 @@
+/* reset.css 檔案建議保持不變，用於標準化瀏覽器樣式 */
+
+/* BMI.min.css - 輕快主題樣式 */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f9ff; /* 明亮的天藍色背景 */
+  color: #333; /* 深灰色文字，易於閱讀 */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.box {
+  max-width: 600px;
+  margin: 1.5rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid #ddd; /* 柔和的邊框顏色 */
+  border-radius: 2rem;
+  padding: 2rem;
+  justify-content: center;
+  background-color: #ffffff; /* 純白背景，乾淨簡單 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 輕微陰影 */
+
+  .title {
+    width: 100%;
+    text-align: center;
+    font-size: 4rem;
+    margin-bottom: 2rem;
+    color: #1e90ff; /* 天藍色標題 */
+  }
+
+  .inputBlock {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  label {
+    flex: 1;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    color: #555; /* 中灰色文字 */
+  }
+
+  .gender, .height, .weight {
+    flex: 6;
+    font-size: 1.5rem;
+    margin: 1.3rem 0;
+    padding: 0.5rem;
+    border: 1px solid #ddd; /* 邊框顏色 */
+    border-radius: 0.5rem;
+  }
+
+  .height:focus, .weight:focus {
+    border-color: #1e90ff; /* 焦點邊框顏色 */
+    outline: none;
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.3);
+  }
+
+  .btnBlock {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 2rem;
+
+    .clear, .calculation {
+      padding: .8rem 1.5rem;
+      border: none;
+      font-size: 1.3rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .clear {
+      background-color: #ff6b6b; /* 柔和的紅色背景 */
+      color: #fff;
+    }
+
+    .clear:hover {
+      background-color: #ff4d4d; /* 更亮的紅色 */
+    }
+
+    .calculation {
+      background-color: #1e90ff; /* 天藍色背景 */
+      color: #fff;
+    }
+
+    .calculation:hover {
+      background-color: #007acc; /* 深藍色背景 */
+    }
+  }
+
+  .result {
+    width: 100%;
+    padding: 1rem;
+    background-color: #e6f7ff; /* 淡藍色背景，舒適明亮 */
+    border: 1px solid #b3e5fc; /* 輕盈的邊框顏色 */
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+    color: #007acc; /* 深藍色文字，強調結果 */
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 輕微陰影 */
+  }
+}

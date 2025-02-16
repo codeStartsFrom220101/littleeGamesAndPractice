@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>99 乘法表</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 90%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    h1 {
+      width: 100%;
+      text-align: center;
+    }
+
+    .box {
+      padding: 2rem;
+      width: calc((100% / 9));
+    }
+
+    .box>div,
+    .box>h2 {
+      width: 100%;
+      text-align: center;
+      text-wrap: nowrap;
+    }
+
+    .box>h2 {
+      font-size: 3rem;
+    }
+  </style>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+  document.write(`<h1>九九乘法表</h1>`);
+  document.write(`<div class="container">`);
+  for (let i = 1; i < 10; i++) {
+    document.write(`<div class="box">`)
+    document.write(`<h2 style="background: white;">${i}</h2>`)
+    for (let j = 1; j < 10; j++) {
+      document.write(`<div>${j} * ${i} = ${i * j}</div>`);
+    }
+    document.write(`</div>`);
+  }
+  document.write(`</div>`);
+
+  const h2 = document.querySelectorAll('h2');
+
+  h2.forEach((item) => {
+    const randomNumbers = Array.from({ length: 3 }, () => Math.floor(Math.random() * 256));
+    let str = `rgb(${randomNumbers.join(',')})`
+    item.style.background = str;
+  })
+  const arr = Array.from({ length: 15 }, () => Math.floor(Math.random() * 256));
+  // console.log(arr, arr.length);
+
+  for (const x of arr) {
+    // console.log(x);
+
+  }
+
+  for (let i = 0; i < 10; i++) {
+    console.log(i > 3 && i < 8);
+
+
+  }
+
+  let x = 55
+
+
+
+</script>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-hant-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>todoList</title>
+  <link rel="stylesheet" href="../reset.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="todo.min.css">
+</head>
+
+<body>
+  <div class="todoList">
+    <h1 class="todoList__title">TODO LIST</h1>
+    <div class="todoList__input">
+      <input type="text" class="todoList__input--input">
+      <button class="todoList__input--btn" data-btntype="add">加入</button>
+    </div>
+    <ul class="todoList__list">
+      <li class="todoList__list--item">
+        <p>要做的事情</p><button data-num="1" class="delete"><i class="fa-regular fa-trash-can"></i></button>
+      </li>
+      <li class="todoList__list--item">
+        <p>要做的事情</p><button class="delete"><i class="fa-regular fa-trash-can"></i></button>
+      </li>
+      <li class="todoList__list--item">
+        <p>要做的事情</p><button class="delete"><i class="fa-regular fa-trash-can"></i></button>
+      </li>
+      <li class="todoList__list--item">
+        <p>要做的事情</p><button class="delete"><i class="fa-regular fa-trash-can"></i></button>
+      </li>
+    </ul>
+  </div>
+
+  <script src="./todo.js"></script>
+</body>
+
+</html>

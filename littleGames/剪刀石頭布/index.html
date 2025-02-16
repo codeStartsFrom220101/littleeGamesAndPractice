@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-tw">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>猜拳</title>
+  <link rel="stylesheet" href="../color.css">
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --light: #fffff0;
+      --dark: #2a0a0a;
+      --slateBlue: #49496f;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 300px;
+      border-radius: 15px;
+      background: var(--dark);
+      display: flex;
+      flex-wrap: wrap;
+      text-align: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    h1 {
+      color: var(--light);
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      width: 100%;
+    }
+
+    .chooseOne {
+      display: flex;
+      justify-content: space-evenly;
+      margin-bottom: 1.5rem;
+      width: 100%;
+    }
+
+    .chooseOne div,
+    .random {
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      line-height: 70px;
+      cursor: pointer;
+      font-size: 1.8rem;
+      background: var(--light);
+      transition: all .3s linear;
+    }
+
+    .chooseOne div:hover {
+      color: var(--light);
+      background: var(--slateBlue);
+    }
+
+    .result {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3rem;
+      opacity: 0;
+      font-weight: 900;
+      text-align: center;
+      transition: all .3s linear;
+    }
+
+    .you,
+    .computer {
+      font-size: 2rem;
+    }
+
+    .result.active {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>剪刀石頭布</h1>
+    <div class="chooseOne">
+      <div data-type="0">剪</div>
+      <div data-type="1">石</div>
+      <div data-type="2">布</div>
+    </div>
+    <div class="random">剪</div>
+  </div>
+  <div class="result active">
+    <div class="you">你出：石</div>
+    <div class="computer">電腦出：布</div>
+    <div class="resultTxt">你贏了</div>
+  </div>
+</body>
+
+</html>
+
+<script>
+  const you = document.querySelector('.you');
+  const computer = document.querySelector('.computer');
+  const userChoose = document.querySelectorAll('.chooseOne > div');
+  const random = document.querySelector('.random');
+  const result = document.querySelector('.result')
+  const resultTxt = document.querySelector('.resultTxt');
+  const arr = ['剪', '石', '布'];
+
+  let randomNum = 0;
+  // 建立能清除的定時器
+  let intervalId;
+  let timeoutId;
+
+  for (const type of userChoose) {
+    // 為所有拳路建立觸碰後連續觸發的事件
+    type.addEventListener('mouseenter', () => {
+      intervalId = setInterval(() => {
+        randomNum = Math.floor(Math.random() * 3);
+        random.textContent = arr[randomNum];
+      })
+    })
+
+    // 移出範圍清除觸發
+    type.addEventListener('mouseout', () => {
+      clearInterval(intervalId);
+      random.textContent = arr[randomNum];
+    })
+
+    // 點擊也停止觸發
+    type.addEventListener('click', () => {
+      clearInterval(intervalId);
+      random.textContent = arr[randomNum];
+      resultRender(type.dataset.type)
+    })
+  }
+
+  function resultRender(userClick) {
+    clearTimeout(timeoutId)
+    userClick = parseInt(userClick); // 將使用者選擇轉換為數字型別
+
+    // 判斷結果
+    if (randomNum === userClick) {
+      resultTxt.textContent = '平手';
+    } else if (
+      (userClick === 0 && randomNum === 2) || // 剪刀贏布
+      (userClick === 1 && randomNum === 0) || // 石頭贏剪刀
+      (userClick === 2 && randomNum === 1)    // 布贏石頭
+    ) {
+      resultTxt.textContent = '你贏了';
+    } else {
+      resultTxt.textContent = '你輸了';
+    }
+    you.textContent = `你出：${arr[userClick]}`
+    computer.textContent = `電腦出：${arr[randomNum]}`
+
+
+    // 顯示結果
+    result.classList.add('active');
+
+    // 隱藏結果
+    timeoutId = setTimeout(() => {
+      result.classList.remove('active');
+    }, 2000); // 2秒後隱藏結果
+  }
+</script>

@@ -1,0 +1,104 @@
+// styles.scss
+// 初始化或全域設定
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// 設定版面高度和隱藏捲軸
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; // 防止出現捲軸
+}
+
+// 主要的身體背景
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  animation: rotateContainer 15s linear infinite;
+  
+  .card {
+    position: absolute;
+    width: 40%;
+    height: 70%;
+    background-color: #000;
+    animation: rotateCard 15s linear infinite;
+    
+    &:nth-of-type(1) {
+      left: -20%;
+      top: -35%;
+    }
+    
+    &:nth-of-type(2) {
+      top: -35%;
+      right: -20%;
+    }
+    
+    &:nth-of-type(3) {
+      bottom: -35%;
+      left: -20%;
+    }
+
+    &:nth-of-type(4) {
+      bottom: -35%;
+      right: -20%;
+      background-color: #fff;
+      text-align: center;
+      border: 1px solid #000;
+      font-size: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+      a {
+        text-decoration: none;
+        color: #000;
+      }
+    }
+  }
+}
+
+.mask {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  cursor: pointer;
+  background: #00000020;
+}
+
+// 動畫 keyframes
+@keyframes rotateContainer {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateCard {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-180deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}

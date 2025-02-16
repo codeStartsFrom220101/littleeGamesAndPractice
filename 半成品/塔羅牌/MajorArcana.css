@@ -1,0 +1,141 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  -webkit-animation: rotateContainer 15s linear infinite;
+          animation: rotateContainer 15s linear infinite;
+}
+.container .card {
+  position: absolute;
+  width: 40%;
+  height: 70%;
+  background-color: #000;
+  -webkit-animation: rotateCard 15s linear infinite;
+          animation: rotateCard 15s linear infinite;
+}
+.container .card:nth-of-type(1) {
+  left: -20%;
+  top: -35%;
+}
+.container .card:nth-of-type(2) {
+  top: -35%;
+  right: -20%;
+}
+.container .card:nth-of-type(3) {
+  bottom: -35%;
+  left: -20%;
+}
+.container .card:nth-of-type(4) {
+  bottom: -35%;
+  right: -20%;
+  background-color: #fff;
+  text-align: center;
+  border: 1px solid #000;
+  font-size: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.container .card:nth-of-type(4) a {
+  text-decoration: none;
+  color: #000;
+}
+
+.mask {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.1254901961);
+}
+
+@-webkit-keyframes rotateContainer {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateContainer {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes rotateCard {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  50% {
+    -webkit-transform: rotate(-180deg);
+            transform: rotate(-180deg);
+  }
+  100% {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+  }
+}
+@keyframes rotateCard {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  50% {
+    -webkit-transform: rotate(-180deg);
+            transform: rotate(-180deg);
+  }
+  100% {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+  }
+}/*# sourceMappingURL=MajorArcana.css.map */

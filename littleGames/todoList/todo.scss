@@ -1,0 +1,92 @@
+* {
+  box-sizing: border-box;
+  list-style-type: none;
+}
+
+:root {
+  --yellow: #FFC30B;
+  --gray: #333333;
+  --ivoryWhite: #FAF3E0;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--yellow);
+  color: var(--gray);
+  font-family: "微軟正黑體";
+}
+
+.todoList {
+  padding: 2rem;
+
+  &__title {
+    font-size: 6rem;
+    font-weight: 900;
+    line-height: 1.5;
+  }
+
+  &__input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    &--input {
+      flex: 8.5;
+      padding: 0 25px;
+      height: 50px;
+      outline: none;
+      border: none;
+      border-radius: 25px 0 0 25px;
+      font-size: 1.5rem;
+      background: var(--ivoryWhite);
+    }
+    
+    &--btn {
+      flex: 1.5;
+      padding: 0.5rem;
+      border: none;
+      outline: none;
+      font-size: 1.5rem;
+      color: var(--ivoryWhite);
+      border-radius: 0 25px 25px 0;
+      background: var(--gray);
+      cursor: pointer;
+    }
+  }
+
+  &__list {
+    width: 100%;
+    padding: 25px;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    background: var(--ivoryWhite);
+    opacity: 0;
+
+    &.active {
+      opacity: 1;
+      transition: all .2s;
+    }
+
+    &--item {
+      line-height: 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      
+      .delete {
+        padding: 0 1rem;
+        outline: none;
+        border: none;
+        font-size: 1.3rem;
+        background: transparent;
+        color: var(--gray);
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+

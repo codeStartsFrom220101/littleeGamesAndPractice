@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>搜尋練習</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    img {
+      width: 100%;
+      vertical-align: bottom;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .searchContainer {
+      display: flex;
+      align-items: center;
+      width: 400px;
+      height: 30px;
+
+    }
+
+    .searchContainer .search {
+      height: 100%;
+      flex: 8;
+      outline: none;
+      border: 1px solid #825252;
+    }
+
+    .searchContainer .searchBtn {
+      height: 100%;
+      flex: 2;
+      outline: none;
+      border: 1px solid #825252;
+      background: #fff;
+    }
+
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      gap: 2rem;
+    }
+
+    article {
+      width: calc(100% / 3 - 6rem);
+    }
+
+    article img {
+      margin-bottom: .8rem;
+    }
+
+    article h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="searchContainer">
+      <input class="search" type="text">
+      <button class="searchBtn" type="button">搜尋</button>
+    </div>
+  </header>
+  <main>
+    <!-- <article>
+      <img src="https://picsum.photos/id/684/600/400" alt="">
+      <h3>書名</h3>
+      <p>
+        電視污染休閒郵遞區號這裡不必孤獨醫生事業往往，發送降價有點遠徹底人員，兩種意見到處，前後化學均為算是人物，空中無派谷歌，企業觀眾，婚姻基隆怎麼樣經過一年天地天下夏天清晰出口，員工遠遠基金創建檢測，東京開通顯卡看到堅持痛苦當你辦公每個神話，好像打算首先大全審批補充共享本網身體眼淚，物理是啊，對手創新。
+      </p>
+    </article> -->
+  </main>
+</body>
+
+</html>
+<script>
+  const books = [
+    {
+      "pic": "https://picsum.photos/id/57/600/300",
+      "title": "天龍八部",
+      "content": "《天龍八部》是金庸所著的武俠小說，講述了三位主角段譽、虛竹與喬峰的命運交織，以及他們在江湖中的奮鬥與抉擇。小說以其深刻的哲學思考和人性的探討而著稱，人物性格複雜，情節曲折。"
+    },
+    {
+      "pic": "https://picsum.photos/id/95/600/300",
+      "title": "射鵰英雄傳",
+      "content": "《射鵰英雄傳》是金庸的經典之作，講述了郭靖從一個憨厚的少年成長為一位傑出的武林英雄，並和黃蓉一起捲入江湖紛爭的故事。小說融合了愛情、冒險、忠義等多重元素。"
+    },
+    {
+      "pic": "https://picsum.photos/id/7/600/300",
+      "title": "倚天屠龍記",
+      "content": "《倚天屠龍記》講述了張無忌的成長過程，從一位懵懂少年，成為武林至尊的過程。小說涵蓋了權謀、愛恨情仇，並與《射鵰英雄傳》及《神雕俠侶》形成三部曲。"
+    },
+    {
+      "pic": "https://picsum.photos/id/58/600/300",
+      "title": "笑傲江湖",
+      "content": "《笑傲江湖》以令狐沖為主角，描述了他在江湖中的闖蕩，以及他與任盈盈的愛情故事。小說充滿了政治鬥爭、正義與邪惡的對立，並探討了自由與束縛的哲學問題。"
+    },
+    {
+      "pic": "https://picsum.photos/id/41/600/300",
+      "title": "神雕俠侶",
+      "content": "《神雕俠侶》是金庸的代表作之一，講述了楊過和小龍女的悲劇愛情故事。小說中結合了武林恩怨與深刻的人性描寫，是一部兼具浪漫與動作的經典之作。"
+    },
+    {
+      "pic": "https://picsum.photos/id/37/600/300",
+      "title": "碧血劍",
+      "content": "《碧血劍》是金庸早期的武俠小說，講述了陳家洛的復國大業以及與黃蓉的感情故事。小說中包含了冒險、忠誠與陰謀，情節緊湊，人物性格立體。"
+    },
+    {
+      "pic": "https://picsum.photos/id/11/600/300",
+      "title": "鴛鴦刀",
+      "content": "《鴛鴦刀》講述了華山派的兩位年輕人，徐子陵與段譽的成長與武學競爭故事。小說中充滿了江湖的激鬥與陰謀，也探討了人與人之間的情誼與忠誠。"
+    },
+    {
+      "pic": "https://picsum.photos/id/89/600/300",
+      "title": "白馬嘯西風",
+      "content": "《白馬嘯西風》是金庸早期的作品之一，講述了蘇乞兒如何從一位普通人經歷一系列冒險成為武林高手的故事。這是一部短篇的武俠小說，情節引人入勝。"
+    }
+  ];
+
+  const main = document.querySelector('main');
+
+  function renderInnerHtml() {
+
+    let str = ''
+    for (const book of books) {
+      str += `
+        <article>
+          <img src="${book.pic}" alt="${book.title}的圖片">
+          <h3>${book.title}</h3>
+          <p>
+            ${book.content}
+          </p>
+        </article>
+      `
+    }
+    main.innerHTML = str;
+  }
+
+  function renderAppendChild() {
+    for (const key in books) {
+      let article = document.createElement('article');
+      let img = document.createElement('img')
+      let h3 = document.createElement('h3')
+      let p = document.createElement('p')
+
+      img.setAttribute('src', books[key].pic)
+      h3.textContent = books[key].title
+      p.textContent = books[key].content
+
+      main.appendChild(article)
+      article.appendChild(img)
+      article.appendChild(h3)
+      article.appendChild(p)
+    }
+  }
+
+
+  renderInnerHtml();
+  const article = document.querySelector('article')
+  console.log(article);
+
+
+
+
+  const search = document.querySelector('.search');
+  const searchBtn = document.querySelector('.searchBtn')
+
+  searchBtn.addEventListener('click', () => {
+    filterData();
+  })
+
+  function filterData() {
+    // let str = ''
+    main.innerHTML = ''
+
+    let filterArr = books.filter((book, i) => {
+      return book.title.includes(search.value)
+    })
+
+    console.log(filterArr);
+
+    // filterArr.forEach(book => {
+    //   str += `
+    //     <article>
+    //       <img src="${book.pic}" alt="${book.title}的圖片">
+    //       <h3>${book.title}</h3>
+    //       <p>
+    //         ${book.content}
+    //       </p>
+    //     </article>
+    //   `
+    // })
+    // main.innerHTML = str
+
+
+
+    for (const book of filterArr) {
+      console.log(book);
+
+      let article = document.createElement('article');
+      let img = document.createElement('img')
+      let h3 = document.createElement('h3')
+      let p = document.createElement('p')
+
+      img.setAttribute('src', book.pic)
+      h3.textContent = book.title
+      p.textContent = book.content
+
+      main.appendChild(article)
+      article.appendChild(img)
+      article.appendChild(h3)
+      article.appendChild(p)
+    }
+  }
+
+
+
+</script>

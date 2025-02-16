@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>密碼強度測試</title>
+  <link rel="stylesheet" href="../color.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 400px;
+      font-size: 1.5rem;
+      background: var(--slateBlue);
+      padding: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      border-radius: 1rem;
+    }
+
+    .container label {
+      color: var(--light);
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+
+    .container input {
+      font-size: 1.5rem;
+      width: 90%;
+    }
+
+    .container label>i {
+      display: none;
+    }
+
+    .container label>i.active {
+      display: inline-block;
+    }
+
+    .container .password {
+      margin-bottom: 1.5rem;
+    }
+
+    .container input::placeholder {
+      font-size: 1rem;
+    }
+
+    .status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .progressContainer {
+      display: flex;
+      color: var(--light);
+      gap: .5rem;
+    }
+
+    .progressContainer span {
+      font-size: 1rem;
+    }
+
+    .progressContainer progress {
+      width: 200px;
+    }
+
+    .btnLayout {
+      width: 100%;
+      display: flex;
+      flex-direction: row-reverse;
+    }
+
+    .btnLayout button {
+      padding: 0.25rem 0.5rem;
+      color: var(--dark);
+      background: var(--light);
+      outline: none;
+      border: none;
+      margin-left: 1rem;
+      border-radius: 3px;
+      transition: all .3s linear;
+    }
+
+    .btnLayout button:hover {
+      background: var(--dark);
+      color: var(--light);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <label for="password">
+      密碼：
+      <input class="password" type="password" placeholder="包含一個英文大寫一個英文小寫及數字">
+      <i class="fa-solid fa-circle-xmark"></i>
+      <i class="fa-solid fa-circle-check"></i>
+      <div class="status">
+        <!-- <i class="fa-solid fa-eye"></i> -->
+        <i class="fa-solid fa-eye-slash"></i>
+        <div class="progressContainer">
+          <span>密碼強度</span>
+          <progress class="strenth" value="0" max="5"></progress><span class="text"></span>
+        </div>
+      </div>
+    </label>
+    <div class="btnLayout">
+      <button type="button">註冊</button>
+      <button type="button">登入</button>
+    </div>
+  </div>
+</body>
+
+</html>
+
+<script>
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,30}$/;
+  const password = document.querySelector('.password');
+  const check = document.querySelectorAll('label[for="password"]>i');
+  const progress = document.querySelector('progress');
+  const eye = document.querySelector('.status > i')
+  let eyeOpen = false
+
+  eye.addEventListener('click', () => {
+    if (eyeOpen) {
+      eye.classList.remove('fa-eye-slash');
+      eye.classList.add('fa-eye');
+      eyeOpen = !eyeOpen
+      password.setAttribute('type', 'text');
+    } else {
+      eye.classList.remove('fa-eye');
+      eye.classList.add('fa-eye-slash');
+      eyeOpen = !eyeOpen
+      password.setAttribute('type', 'password');
+    }
+  })
+
+
+  password.addEventListener('keyup', function () {
+    let value = password.value
+
+    if (regex.test(value)) {
+      check.forEach(item => {
+        item.classList.remove('active');
+      })
+      check[1].classList.add('active');
+      passwordLevel(value);
+    } else {
+      check.forEach(item => {
+        item.classList.remove('active');
+      })
+      check[0].classList.add('active');
+    }
+  })
+
+  function passwordLevel(password) {
+    let score = 0;
+
+    if (password.length >= 10) score += 1; // 長度
+    if (/[a-z]/.test(password)) score += 1; // 小寫字母
+    if (/[A-Z]/.test(password)) score += 1; // 大寫字母
+    if (/\d/.test(password)) score += 1; // 數字
+    if (/[@#$%^&*()_+!\-=\[\]{};':"\\|,.<>?]/.test(password)) score += 1; // 特殊字符
+
+    progress.value = score
+  }
+
+</script>

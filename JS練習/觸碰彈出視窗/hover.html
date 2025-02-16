@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-tw">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>觸碰彈出視窗</title>
+</head>
+<style>
+  p {
+    cursor: default;
+  }
+
+  info {
+    display: inline-block;
+    border: 1px solid #000;
+    color: blue;
+    text-decoration: underline;
+    transition: all .5s;
+  }
+
+  info:hover {
+    transform: scale(1.2);
+  }
+
+  .infoModal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: .5rem;
+    width: 200px;
+    box-shadow: 3px 3px 10px #00000050;
+    border-radius: 3px;
+    opacity: 0;
+    transition: opacity .5s linear;
+  }
+
+  .infoModal.active {
+    opacity: 1;
+  }
+
+  .infoModal img {
+    border-radius: 3px;
+  }
+
+  .infoModal p {
+    font-size: 0.8rem;
+  }
+</style>
+
+<body>
+  <p>
+    請您做法標題雜誌斑竹是一種配合欄目導演<info>豐原</info>
+    理想區別實用，謝謝是從你也，有效自然，曾經對了秘密檔案主流擔心簡歷，細節思維十二新人收入溫柔細節那裡舉辦電源鼓勵對象數碼相機，鏡頭瘋狂咱們分別的說排行原本應該，更加除了<info>地球</info>
+    ，會不會，傷心上門，起點不對引用知名民族街道<info>台中</info>
+    電視劇交友不能日本，二十激情就會，感染怎樣百度播放春天果然信心湖北，手裡治理實業中心感覺到業務，長大股東還可以沉默，比賽最好的加盟都是，祝福先生壓縮處罰文件聲明容易每天親自態度，現象插入從而不好太陽危險她的內置一對心中或是，元素定義整體將其統計需要，革命專家要求不知應該住宅大概休息，作者外貿依據能學到對外經歷給我們首先作出，損失配件出。
+  </p>
+  <div class="infoModal">
+    <img src="https://picsum.photos/id/684/200/150" alt="">
+    <p>
+      家裡全文兩個投資傳播就能就有些什麼跟着優質，北方商品結構所謂有所常用玻璃聯合案例，千萬信心改進之後下去筆記本一系列溝通，激烈萬。
+    </p>
+  </div>
+</body>
+
+</html>
+<script>
+  const infos = document.querySelectorAll('info').entries();
+  console.log(infos);
+
+  const infoModal = document.querySelector('.infoModal');
+
+  for (const [key, info] of infos) {
+    info.setAttribute('data-pic', `https://picsum.photos/id/6${key}/200/150`)
+    info.addEventListener('mouseenter', () => {
+
+      infoModal.children[0].setAttribute('src', info.dataset.pic)
+      infoModal.classList.add('active')
+    })
+
+    info.addEventListener('mouseout', () => {
+      setTimeout(() => {
+        infoModal.classList.remove('active')
+      }, 200)
+    })
+  }
+  window.addEventListener('mousemove', (e) => {
+    let x = e.clientX;
+    let y = e.clientY;
+
+    infoModal.style.left = x + 15 + 'px';
+    infoModal.style.top = y + 15 + 'px';
+
+  })
+</script>
